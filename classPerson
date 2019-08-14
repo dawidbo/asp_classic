@@ -1,0 +1,134 @@
+<%
+
+Class Person
+	Private name
+	Private alias
+
+	'execute when object is created'
+	Public Sub Class_Initialize
+  		name 			= Empty
+  		alias	 		= "unknown"
+ 	End Sub
+
+	'like contructor'
+	Public Default Function construct(p_name)
+		name			= p_name
+		Set construct 	= Me
+	End Function
+
+	'execute when object is closed'
+	Public Sub Class_Terminate
+  		name 			= Empty
+  		alias	 		= Empty
+ 	End Sub
+
+ 	'setters and getters'
+ 	Public Property Let setName(value)
+		name = value
+ 	End Property
+
+ 	Public Property Let setAlias(value)
+		alias = value
+ 	End Property
+
+ 	Public Property Get getName()
+		Dim ans : ans = "unknown"
+
+		If Not IsEmpty(name) Then
+			ans = name
+		End If
+
+		getName = ans
+ 	End Property
+
+ 	Public Property Get getAlias()
+		getAlias = alias
+ 	End Property
+
+ 	'Methods'
+ 	Public Sub getFullNames()
+ 		Response.Write "Name: " & getName() & " Alias: " & getAlias() & "<br>"
+ 	End Sub
+
+ 	Public Sub getFullVolews()
+ 		Response.Write "Name no. volwes: " & getNameVowels() & " Alias no. volwes: " & getAliasVowels() & "<br>"
+ 	End Sub
+
+	Public Function getNameVowels()
+		Dim ans : ans = 0
+		If Not IsEmpty(name) And name <> "unknown" Then
+			ans = getVowels(name)
+		End If
+		getNameVowels = ans
+	End Function
+
+	Public Function getAliasVowels()
+		Dim ans : ans = 0
+		If Not IsEmpty(alias) And alias <> "unknown" Then
+			ans = getVowels(alias)
+		End If
+		getAliasVowels = ans
+	End Function
+
+	Private Function getVowels(word)
+		Dim volwesArr : volwesArr = Array("a","e","i","o","u")
+		Dim wordArr : wordArr = wordToArray(word)
+		Dim sum : sum = 0
+
+		For Each letter In wordArr
+			For Each volwes in volwesArr
+				If letter = volwes Then
+					sum = sum + 1
+				End If
+			Next
+		Next
+		getVowels = sum
+	End Function
+
+	Private Function wordToArray(word)
+		Dim wordArr()
+		Dim wordLen : wordLen = Len(word)
+		If wordLen > 0 Then
+			ReDim wordArr(wordLen -1)
+			'ReDim Preserve myDynArray(3) 'Preserve - leave old data in array
+			For i = 1 To wordLen
+				wordArr(i-1) = Mid(word, i, 1)
+			Next
+		End If
+		wordToArray = wordArr
+	End Function
+End Class
+
+
+'Create Objects'
+
+Dim  Lena : Set Lena = new Person
+Lena.getFullNames()
+Lena.getFullVolews()
+Lena.setName = "Lena"
+Lena.setAlias = "Jaja"
+Lena.getFullNames()
+Lena.getFullVolews()
+
+Dim Wojtek : Set Wojtek = (new Person)("Wojtek")
+Wojtek.getFullNames()
+Wojtek.getFullVolews()
+Wojtek.setAlias = "BraveHeart"
+Wojtek.getFullNames()
+Wojtek.getFullVolews()
+
+
+'Name: unknown Alias: unknown
+'Name no. volwes: 0 Alias no. volwes: 0
+'Name: Lena Alias: Jaja
+'Name no. volwes: 2 Alias no. volwes: 2
+'Name: Wojtek Alias: unknown
+'Name no. volwes: 2 Alias no. volwes: 0
+'Name: Wojtek Alias: BraveHeart
+'Name no. volwes: 2 Alias no. volwes: 4
+
+
+
+
+
+%>
