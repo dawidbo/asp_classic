@@ -1,0 +1,45 @@
+'Try'
+On Error Resume Next
+Err.Clear
+
+Dim i : i = 2/0
+
+'Catch'
+If Err.Number <> 0 Then
+    Response.Write "Error: " & Err.Number & "<br>"
+    Response.Write "Error (Hex): " & Hex(Err.Number) & "<br>"
+    Response.Write "Source: " & Err.Source & "<br>"
+    Response.Write "Description: " & Err.Description & "<br>"
+    Response.End 'Stop to read code forward'
+End If
+
+'Reset error handling'
+On Error Goto 0
+
+Try catch and raise error
+
+
+
+
+'Try'
+On Error Resume Next
+Err.Clear
+
+Dim i : i = 0
+
+If i = 0 Then
+   Call Err.Raise(65500, "Function getMyId()", "Parse json error")
+End If
+Call Err.Raise(65501, "Function getYourId()", "Always raise this exception as first - LIFO")
+
+'Catch'
+If Err.Number <> 0 Then
+    Response.Write "Error: " & Err.Number & "<br>"
+    Response.Write "Error (Hex): " & Hex(Err.Number) & "<br>"
+    Response.Write "Source: " & Err.Source & "<br>"
+    Response.Write "Description: " & Err.Description & "<br>"
+    Response.End 'Stop to read code forward'
+End If
+
+'Reset error handling'
+On Error Goto 0
