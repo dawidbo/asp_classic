@@ -1,0 +1,23 @@
+Dim i, dicItem, dicKeys
+Dim dic : Set dic = CreateObject("Scripting.Dictionary")
+
+dic.Add "o", "one"
+dic.Add "t", "two"
+dic.Add "r", "tree"
+dic.Add "f", "four"
+
+dicKeys = dic.Keys
+dicItem = dic.Items
+
+If dic.Exists("o") Then
+	For i = 0 To dic.Count - 1
+		Response.Write "Key: " & dicKeys(i) &" Item: " & dicItem(i) & "<br>"
+	Next
+Else
+	Response.Write "Specified key doesn't exist."
+End If
+
+'Key: o Item: one
+'Key: t Item: two
+'Key: r Item: tree
+'Key: f Item: four
